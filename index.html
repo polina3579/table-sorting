@@ -2,59 +2,73 @@
 <html>
 <body>
 
+<h3>Sort by a column:</h3>
+<ul>
+    <li>
+        <a href="javascript:void(0);" onclick="sortBy('subjectCol')">Subject</a>
+    </li>
+    <li>
+        <a href="javascript:void(0);" onclick="sortBy('emailCol')">Email</a>
+    </li>
+</ul>
+
+<hr>
+
 <table id="table">
     <thead>
     <tr>
-        <th style="padding-right: 30px;">Subject</th>
-        <th>Email</th>
+        <th class="subjectCol" style="padding-right: 30px;">Subject</th>
+        <th class="emailCol">Email</th>
     </tr>
     </thead>
 
     <tbody>
     <tr>
-        <td>Subject 1</td>
-        <td>Email 4</td>
+        <td class="subjectCol">Subject 1</td>
+        <td class="emailCol">Email 4</td>
     </tr>
     <tr>
-        <td>Subject 3</td>
-        <td>Email 1</td>
+        <td class="subjectCol">Subject 3</td>
+        <td class="emailCol">Email 1</td>
     </tr>
     <tr>
-        <td>Subject 2</td>
-        <td>Email 3</td>
+        <td class="subjectCol">Subject 2</td>
+        <td class="emailCol">Email 3</td>
     </tr>
     <tr>
-        <td>Subject 2</td>
-        <td>Email 2</td>
+        <td class="subjectCol">Subject 2</td>
+        <td class="emailCol">Email 2</td>
     </tr>
     <tr>
-        <td>Subject 4</td>
-        <td>Email 2</td>
+        <td class="subjectCol">Subject 4</td>
+        <td class="emailCol">Email 2</td>
     </tr>
     <tr>
-        <td>Subject 3</td>
-        <td>Email 4</td>
+        <td class="subjectCol">Subject 3</td>
+        <td class="emailCol">Email 4</td>
     </tr>
     <tr>
-        <td>Subject 1</td>
-        <td>Email 1</td>
+        <td class="subjectCol">Subject 1</td>
+        <td class="emailCol">Email 1</td>
     </tr>
     <tr>
-        <td>Subject 2</td>
-        <td>Email 1</td>
+        <td class="subjectCol">Subject 2</td>
+        <td class="emailCol">Email 1</td>
     </tr>
     <tr>
-        <td>Subject 2</td>
-        <td>Email 3</td>
+        <td class="subjectCol">Subject 2</td>
+        <td class="emailCol">Email 3</td>
     </tr>
     </tbody>
 </table>
 
 <script>
 
-    function sortBy(columnIndex) {
-        const hashMap = Array.from(table.rows).slice(1).reduce((acc, row) => {
-            const cellValue = row.cells[columnIndex].innerHTML;
+    function sortBy(columnClass) {
+        const columnCells = document.querySelectorAll(`td.${columnClass}`);
+
+        const hashMap = Array.from(columnCells).reduce((acc, cell) => {
+            const cellValue = cell.innerHTML;
 
             acc[cellValue] = (acc[cellValue] || 0) + 1;
 
@@ -64,8 +78,8 @@
         let sortedRows = Array.from(table.rows)
             .slice(1)
             .sort((rowA, rowB) => {
-                const value1 = rowB.cells[columnIndex].innerHTML;
-                const value2 = rowA.cells[columnIndex].innerHTML;
+                const value1 = rowB.querySelector(`td.${columnClass}`).innerHTML;
+                const value2 = rowA.querySelector(`td.${columnClass}`).innerHTML;
 
                 const s = hashMap[value1] - hashMap[value2];
                 if (s !== 0) { return s; }
@@ -75,10 +89,6 @@
 
         table.tBodies[0].append(...sortedRows);
     }
-
-    // Enter index of a column
-    sortBy(0);
-
 
 </script>
 
